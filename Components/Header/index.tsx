@@ -1,49 +1,33 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView, SafeAreaView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, SafeAreaView, StyleProp, ViewStyle } from "react-native";
 import Button from "../Button";
+import styles from "./style";
 
 type HeaderProps = {
     title: string;
-    buttonLeft?: string;
-    buttonRight?: string;
+    buttonLeft?: React.ReactNode;
+    buttonRight?: React.ReactNode;
     onPressLeft?: () => void;
     onPressRight?: () => void;
+    style?: StyleProp<ViewStyle>;
 };
 
-const Header = () => (
+const Header: React.FC<HeaderProps> = ({ title, buttonLeft, buttonRight }) => (
     <View style={styles.header}>
-        <Text style={styles.headerText}>Header</Text>
+        <View style={styles.buttonContainer}>{buttonLeft}</View>
+        <Text style={styles.headerText}>{title}</Text>
+        <View style={styles.buttonContainer}>{buttonRight}</View>
     </View>
 );
 
 const App = () => (
-    <SafeAreaView>
-        <View style={styles.container}>
-            <Header />
-        </View>
+    <SafeAreaView style={styles.container}>
+        <Header 
+            title="Header"
+            buttonLeft={<Button title="Left" onPress={() => alert("Left button pressed")} />}
+            buttonRight={<Button title="Right" onPress={() => alert("Right button pressed")} />}
+        />
     </SafeAreaView>
 );
-
-const styles = StyleSheet.create({
-    container: {
-        marginTop: 15,
-        flex: 1,
-    },
-    header: {
-        position: "relative",
-        height: 60,
-        left: 0,
-        right: 0,
-        width: 390,
-        backgroundColor: "blue",
-        justifyContent: "center",
-        alignItems: "center",
-        alignContent: "center",
-    },
-    headerText: {
-        color: "white",
-        fontSize: 20,
-    },
-});
 
 export default App;

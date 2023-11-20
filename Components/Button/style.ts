@@ -2,21 +2,23 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
     button: {
-        textAlign: "center",
-        backgroundColor: "#687EFF",
-        padding: 13,
-        margin: 10,
-        borderRadius: 10,
+        width: 120,
+        height: 50,
+        backgroundColor: "#3498db", // Use a shade of blue
+        borderRadius: 25, // Make the button slightly rounded
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation: 2, // Add elevation for a subtle shadow effect (Android)
+        shadowColor: '#000', // Add shadow color (iOS)
+        shadowOffset: { width: 0, height: 2 }, // Add shadow offset (iOS)
+        shadowOpacity: 0.2, // Add shadow opacity (iOS)
     },
     buttonPressed: {
-        textAlign: "center",
-        backgroundColor: "green",
-        padding: 13,
-        margin: 10,
-        borderRadius: 50, // Rende il pulsante circolare
+        backgroundColor: "#2c3e50", // Darken the color when pressed
     },
     buttonText: {
-        fontSize: 20,
+        fontSize: 18,
         color: "white",
+        fontWeight: 'bold', // Make the text bold for emphasis
     },
 });
