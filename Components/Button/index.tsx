@@ -1,5 +1,12 @@
 import React from "react";
-import { TouchableOpacity, Text, StyleProp, ViewStyle } from "react-native";
+import {
+    TouchableOpacity,
+    Text,
+    StyleProp,
+    ViewStyle,
+    KeyboardAvoidingView,
+    SafeAreaView,
+} from "react-native";
 import style from "./style";
 
 type ButtonProps = {
@@ -8,11 +15,20 @@ type ButtonProps = {
     style?: StyleProp<ViewStyle>; // Aggiungi una prop style qui
 };
 
-const Button: React.FC<ButtonProps> = ({ title, onPress, style: customStyle }) => {
+const Button: React.FC<ButtonProps> = ({
+    title,
+    onPress,
+    style: customStyle,
+}) => {
     return (
-        <TouchableOpacity style={[style.button, customStyle]} onPress={onPress}>
-            <Text style={style.buttonText}>{title}</Text>
-        </TouchableOpacity>
+        <SafeAreaView>
+            <TouchableOpacity
+                style={[style.button, customStyle]}
+                onPress={onPress}
+            >
+                <Text style={style.buttonText}>{title}</Text>
+            </TouchableOpacity>
+        </SafeAreaView>
     );
 };
 

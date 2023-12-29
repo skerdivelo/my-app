@@ -4,7 +4,7 @@ export default StyleSheet.create({
     button: {
         width: 120,
         height: 50,
-        backgroundColor: "#3498db", // Use a shade of blue
+        backgroundColor: "#000", // Use a shade of blue
         borderRadius: 25, // Make the button slightly rounded
         justifyContent: 'center',
         alignItems: 'center',

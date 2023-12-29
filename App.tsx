@@ -1,69 +1,107 @@
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from "react-native";
-import Header from "./Components/Header";
+import {
+    StyleSheet,
+    Text,
+    View,
+    TextInput,
+    KeyboardAvoidingView,
+    TouchableOpacity,
+    SafeAreaView,
+    Platform,
+} from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 import Button from "./Components/Button";
+import Timer from "./screens/Timer/Timer";
+
+const Stack = createStackNavigator();
 
 export default function App() {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    return (
+        <NavigationContainer>
+            <Stack.Navigator initialRouteName="Login">
+                <Stack.Screen name="Login" component={LoginScreen} />
+                <Stack.Screen name="Timer" component={Timer} />
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
+}
 
-    const handleLogin = () => {
-        // Gestisci il login qui
-        alert(`Username: ${username}, Password: ${password}`);
-    };
+function LoginScreen({ navigation }: { navigation: any }) {
+    const [username, setUsername] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+
+    function handleLogin() {
+        if (username == "" || password == "") {
+            alert("Inserisci username e password");
+            return;
+        } else if (
+            username === "skerdi" ||
+            (username === "Skerdi" && password === "velo")
+        ) {
+            navigation.reset({
+                index: 0,
+                routes: [{ name: "Timer" }],
+            });
+        } else {
+            alert("Username o password errati");
+        }
+    }
 
     return (
-        <View style={styles.container}>
-            <Header />
-            <View style={styles.inputContainer}>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Username"
-                    value={username}
-                    onChangeText={setUsername}
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Password"
-                    value={password}
-                    onChangeText={setPassword}
-                    secureTextEntry
-                />
-                <Button style={styles.button} title="Login" onPress={handleLogin} />
+        <KeyboardAvoidingView
+            style={styles.container}
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
+            <View style={styles.container}>
+                <StatusBar style="auto" />
+                <View style={styles.content}>
+                    <Text style={styles.text}>Identificati!</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Inserisci il tuo nome"
+                        onChangeText={(username) => setUsername(username)}
+                        value={username}
+                    />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Inserisci la tua password"
+                        onChangeText={(password) => setPassword(password)}
+                        value={password}
+                        secureTextEntry={true}
+                    />
+                    <Button title="Login" onPress={handleLogin} />
+                </View>
             </View>
-            <StatusBar style="auto" />
-        </View>
+        </KeyboardAvoidingView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        backgroundColor: "#fff",
+        height: "100%",
+        alignItems: "center",
         justifyContent: "center",
-        alignItems: "center", // Aggiungi questo per centrare orizzontalmente
     },
-    inputContainer: {
-        width: "80%", // Riduci la larghezza per permettere il centratura orizzontale
+    content: {
+        width: "80%",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    text: {
+        fontSize: 24,
+        fontWeight: "bold",
+        marginBottom: 20,
     },
     input: {
-        width: "100%",
+        width: 300,
         height: 40,
-        borderColor: "gray",
+        borderColor: 'gray',
         borderWidth: 1,
-        marginTop: 20,
-        padding: 10,
         borderRadius: 5,
-    },
-    button: {
-        backgroundColor: "blue",
-        marginTop: 20,
+        marginBottom: 20,
         padding: 10,
-        alignItems: "center",
-        alignSelf: "center",
-    },
-    buttonText: {
-        color: "white",
-        fontSize: 18,
     },
 });
